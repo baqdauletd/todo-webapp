@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel = "stylesheet" th:href = "@{/webjars/bootstrap/5.2.2/css/bootstrap.min.css}"/>
+    <meta http-equiv="refresh" content="60">
+
+    <style>
+        .deadline-passed{
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class = "container">
+        <h1>Spring Boot Todo Webapp</h1>
+
+        <h3><a class = "btn btn-outline-success" href = "/login">
+            <i class = "bi bi-plus-square-fill"></i>Log Out</a></h3>
+        <hr />
+
+        <table class = "table table-bordered table-striped">
+            <thead>
+                <tr>
+                   <!-- <th>Id</th>-->
+                    <th>Is Complete</th>
+                    <th>Description</th>
+                    <th>Deadline</th>
+                    <th>Actions</th>
+                    <!--<th>Created At</th>
+                    <th>Updated At</th>-->
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr th:each = "item : ${todoItems}" >
+                    <td>
+                        <span th:if = "${item.isComplete} == true" th:text = "Yes"></span>
+                        <span th:unless = "${item.isComplete} == true" th:text = "No"></span>
+                    </td>
+                    <!--<td th:text = "${item.id}"></td>-->
+                    <td th:text = "${item.description}"></td>
+                   <!-- <td th:text = "${item.createdAt}"></td>
+                    <td th:text = "${item.updatedAt}"></td>-->
+<!--                    <td th:text="${item.deadline}"></td>-->
+                    <td th:text="${item.deadline != null ? item.getTimeRemaining().toDays() + ' days, ' + item.getTimeRemaining().toHoursPart() + ' hours, ' + item.getTimeRemaining().toMinutesPart() + ' minutes' : '--'}"
+                        th:classappend="${item.deadlinePassed ? 'deadline-passed' : ''}"></td>
+                    <td>
+                        <div class = "btn btn-group-sm" role = "group">
+                            <a class = "btn btn-info" th:href = "@{/edit/{id}(id = ${item.id})}">
+                                <i class = "bi bi-pencil-fill"></i>Edit</a>
+                            <a class = "btn btn-danger" th:href = "@{/delete/{id}(id = ${item.id})}">
+                                <i class = "bi-trash-fill"></i>Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><a class = "btn btn-outline-success" href = "/create-todo">
+            <i class = "bi bi-plus-square-fill"></i>Create a Todo</a>
+        </p>
+    </div>
+
+    <script th:src = "@{/webjars/bootstrap/5.2.2/js/bootstrap.min.js}"></script>
+</body>
+</html>
