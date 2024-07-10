@@ -28,6 +28,7 @@
                    <!-- <th>Id</th>-->
                     <th>Is Complete</th>
                     <th>Description</th>
+                    <th>Priority</th>
                     <th>Deadline</th>
                     <th>Actions</th>
                     <!--<th>Created At</th>
@@ -46,8 +47,9 @@
                    <!-- <td th:text = "${item.createdAt}"></td>
                     <td th:text = "${item.updatedAt}"></td>-->
 <!--                    <td th:text="${item.deadline}"></td>-->
+                    <td th:text = "${item.priority}"></td>
                     <td th:text="${item.deadline != null ? item.getTimeRemaining().toDays() + ' days, ' + item.getTimeRemaining().toHoursPart() + ' hours, ' + item.getTimeRemaining().toMinutesPart() + ' minutes' : '--'}"
-                        th:classappend="${item.deadlinePassed ? 'deadline-passed' : ''}"></td>
+                        th:classappend="${item.deadlinePassed ? '' : 'deadline-passed'}"></td>
                     <td>
                         <div class = "btn btn-group-sm" role = "group">
                             <a class = "btn btn-info" th:href = "@{/edit/{id}(id = ${item.id})}">

@@ -29,6 +29,16 @@
                                placeholder="Description"
                         >
 
+                        <label for="priority">Priority</label>
+                        <select name="priority" id="priority" th:field="*{priority}">
+                            <option value="none">NONE</option>
+                            <option value="urgent">Urgent</option>
+                            <option value="daily">Daily</option>
+                            <option value="future">Future</option>
+                        </select>
+
+                        <hr/>
+
                         <label for="deadline">Deadline</label>
                         <input class="form-control"
                                type="datetime-local"

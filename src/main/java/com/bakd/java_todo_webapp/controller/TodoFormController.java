@@ -93,11 +93,10 @@ public class TodoFormController {
         Person person = personOptional.get();
         todoItem.setPerson(person);
 
-        item.setIsComplete(todoItem.getIsComplete());
-        item.setDescription(todoItem.getDescription());
-        item.setDeadline(todoItem.getDeadline());
-
-        todoItemService.save(item);
+//        item.setIsComplete(todoItem.getIsComplete());
+//        item.setDescription(todoItem.getDescription());
+//        item.setDeadline(todoItem.getDeadline());
+        todoItemService.save(todoItem);
         return "redirect:/";
     }
 
