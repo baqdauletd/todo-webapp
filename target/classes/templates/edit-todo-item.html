@@ -29,6 +29,20 @@
                                placeholder="Description"
                         >
 
+                        <label for="category">Category</label>
+                        <select class="form-control" name="category" id="category" th:field="*{category.id}">
+                            <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">
+                            </option>
+                        </select>
+
+                        <label for="newCategory">Add new Category</label>
+                        <input class="form-control"
+                               type="text"
+                               name="newCategory"
+                               id="newCategory"
+                               placeholder="New Category"
+                        >
+
                         <label for="deadline">Deadline</label>
                         <input class="form-control"
                                type="datetime-local"

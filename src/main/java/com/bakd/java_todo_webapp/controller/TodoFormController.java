@@ -1,5 +1,6 @@
 package com.bakd.java_todo_webapp.controller;
 
+import com.bakd.java_todo_webapp.models.Category;
 import com.bakd.java_todo_webapp.models.Person;
 import com.bakd.java_todo_webapp.models.TodoItem;
 import com.bakd.java_todo_webapp.security.PersonDetails;
@@ -12,9 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -27,12 +26,19 @@ public class TodoFormController {
     private PersonDetailsService personDetailsService;
 
     @GetMapping("/create-todo")
-    public String showCreateForm(TodoItem todoItem) {
+    public String showCreateForm(TodoItem todoItem, Model model) {
+        model.addAttribute("categories", todoItemService.getAllCategories() );
         return "new-todo-item";
     }
 
     @PostMapping("/todo")
-    public String createTodoItem(@Valid TodoItem todoItem, BindingResult result, Model model){
+    public String createTodoItem(@Valid TodoItem todoItem, BindingResult result, Model model, @RequestParam String newCategory) {
+        if(!newCategory.isEmpty()){
+            Category category = new Category();
+            category.setName(newCategory);
+            todoItem.setCategory(todoItemService.saveCategory(category));
+        }
+
         TodoItem item = new TodoItem();
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -73,14 +79,23 @@ public class TodoFormController {
                 .orElseThrow(() -> new IllegalArgumentException("TodoItem id: " + id + " not found"));
 
         model.addAttribute("todo", todoItem);
+        model.addAttribute("categories", todoItemService.getAllCategories() );
         return "edit-todo-item";
     }
 
     @PostMapping("/todo/{id}")
-    public String updateTodoItem(@PathVariable("id") Long id, @Valid TodoItem todoItem, BindingResult result, Model model){
+    public String updateTodoItem(@PathVariable("id") Long id, @Valid TodoItem todoItem, BindingResult result, Model model, @RequestParam String newCategory){
         TodoItem item = todoItemService
                 .getById(id)
                 .orElseThrow(() -> new IllegalArgumentException("TodoItem id: " + id + " not found"));
+
+        if(!newCategory.isEmpty()){
+            Category category = new Category();
+            category.setName(newCategory);
+            todoItem.setCategory(todoItemService.saveCategory(category));
+        } else {
+        item.setCategory(todoItem.getCategory());
+    }
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
