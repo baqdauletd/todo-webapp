@@ -18,7 +18,7 @@
 
         <div class = "col-6">
             <h2>Add a new Todo Item</h2>
-            <form action = "#" th:action = "@{/todo}" th:object = "${todoItem}" method = "POST">
+            <form action = "#" th:action = "@{/todo}" th:object = "${todo}" method = "POST">
                 <div class = "form-group">
                     <label for = "description">Description</label>
                     <input class = "form-control"
@@ -27,6 +27,16 @@
                            id = "description"
                            placeholder="Description"
                     >
+
+                    <label for="priority">Priority</label>
+                    <select name="priority" id="priority" th:field="*{priority}">
+                        <option value="none">NONE</option>
+                        <option value="urgent">Urgent</option>
+                        <option value="daily">Daily</option>
+                        <option value="future">Future</option>
+                    </select>
+
+                    <hr/>
 
                     <label for="deadline">Deadline</label>
                     <input class="form-control"
