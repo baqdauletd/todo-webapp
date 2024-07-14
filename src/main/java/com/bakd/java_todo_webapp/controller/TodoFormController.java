@@ -94,8 +94,8 @@ public class TodoFormController {
             category.setName(newCategory);
             todoItem.setCategory(todoItemService.saveCategory(category));
         } else {
-        item.setCategory(todoItem.getCategory());
-    }
+            item.setCategory(todoItem.getCategory());
+        }
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
