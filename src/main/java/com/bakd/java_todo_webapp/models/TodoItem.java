@@ -37,11 +37,12 @@ public class TodoItem implements Serializable {
     @JoinColumn(name = "personID")
     private Person person;
 
-    private String priority;
-
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @Enumerated(EnumType.STRING)
+    private Priority priority;
 
     public Duration getTimeRemaining(){
         return deadline != null ? Duration.between(LocalDateTime.now(), deadline) : Duration.ZERO;

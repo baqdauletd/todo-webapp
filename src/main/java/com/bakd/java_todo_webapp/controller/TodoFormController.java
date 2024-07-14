@@ -2,6 +2,7 @@ package com.bakd.java_todo_webapp.controller;
 
 import com.bakd.java_todo_webapp.models.Category;
 import com.bakd.java_todo_webapp.models.Person;
+import com.bakd.java_todo_webapp.models.Priority;
 import com.bakd.java_todo_webapp.models.TodoItem;
 import com.bakd.java_todo_webapp.security.PersonDetails;
 import com.bakd.java_todo_webapp.services.PersonDetailsService;
@@ -28,6 +29,7 @@ public class TodoFormController {
     @GetMapping("/create-todo")
     public String showCreateForm(TodoItem todoItem, Model model) {
         model.addAttribute("categories", todoItemService.getAllCategories() );
+        model.addAttribute("priorities", Priority.values());
         return "new-todo-item";
     }
 
@@ -80,6 +82,7 @@ public class TodoFormController {
 
         model.addAttribute("todo", todoItem);
         model.addAttribute("categories", todoItemService.getAllCategories() );
+        model.addAttribute("priorities", Priority.values());
         return "edit-todo-item";
     }
 
