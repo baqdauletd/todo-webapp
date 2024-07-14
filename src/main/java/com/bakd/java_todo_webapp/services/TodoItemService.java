@@ -1,6 +1,8 @@
 package com.bakd.java_todo_webapp.services;
 
+import com.bakd.java_todo_webapp.models.Category;
 import com.bakd.java_todo_webapp.models.Person;
+import com.bakd.java_todo_webapp.repositories.CategoryRepository;
 import com.bakd.java_todo_webapp.repositories.PeopleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,6 +26,9 @@ public class TodoItemService {
 
     @Autowired
     private PersonDetailsService personDetailsService;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
 //    public Iterable<TodoItem> getAll(){
 //        return todoItemRepository.findAll();
@@ -49,8 +54,15 @@ public class TodoItemService {
         return todoItemRepository.save(todoItem);
     }
 
-
     public void delete(TodoItem todoItem){
         todoItemRepository.delete(todoItem);
+    }
+
+    public Iterable<Category> getAllCategories(){
+        return categoryRepository.findAll();
+    }
+
+    public Category saveCategory(Category category){
+        return categoryRepository.save(category);
     }
 }

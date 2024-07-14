@@ -39,6 +39,10 @@ public class TodoItem implements Serializable {
 
     private String priority;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     public Duration getTimeRemaining(){
         return deadline != null ? Duration.between(LocalDateTime.now(), deadline) : Duration.ZERO;
     }
